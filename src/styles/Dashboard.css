@@ -1,0 +1,19 @@
+
+.dashboard {
+  min-height: 100vh;
+  padding: 40px;
+  background: #f8f9fc;
+  color: #1e293b;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.dashboard p {
+  font-size: 16px;
+  color: #64748b;
+}
