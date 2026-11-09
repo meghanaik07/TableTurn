@@ -1,0 +1,110 @@
+
+.my-bookings-page {
+  min-height: 100vh;
+  background: #11110f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  font-family: "DM Sans", sans-serif;
+}
+
+.my-bookings-card {
+  width: 100%;
+  max-width: 650px;
+  background: #f8f5ed;
+  padding: 40px;
+  border-radius: 14px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+}
+
+.my-bookings-card h1 {
+  color: #191816;
+  font-family: "Playfair Display", serif;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.my-bookings-subtitle {
+  color: #777;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.reservation-card {
+  background: white;
+  border: 1px solid #e5dccd;
+  border-radius: 10px;
+  padding: 25px;
+  margin-top: 20px;
+}
+
+.reservation-card h2,
+.no-bookings h2 {
+  color: #29251f;
+  font-family: "Playfair Display", serif;
+  margin-bottom: 18px;
+}
+
+.reservation-card p {
+  color: #555;
+  margin: 12px 0;
+  font-size: 15px;
+}
+
+.booking-status {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 7px 13px;
+  border-radius: 20px;
+  background: #f3e6cf;
+  color: #80613b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cancel-booking-button {
+  display: block;
+  width: 100%;
+  margin-top: 22px;
+  padding: 13px;
+  background: #9e4138;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.cancel-booking-button:hover {
+  background: #7f3029;
+}
+
+.no-bookings {
+  text-align: center;
+  padding: 35px 10px;
+  background: white;
+  border-radius: 10px;
+}
+
+.no-bookings p {
+  color: #777;
+}
+
+.back-home-button {
+  display: block;
+  margin: 25px auto 0;
+  padding: 12px 25px;
+  background: #bd945d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .my-bookings-card {
+    padding: 25px 18px;
+  }
+}

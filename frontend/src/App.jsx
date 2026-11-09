@@ -1,6 +1,8 @@
 
 import { useState } from "react";
 import "./App.css";
+import Auth from "./Auth";
+import MyBookings from "./MyBooking";
 
 function App() {
   const [form, setForm] = useState({
@@ -13,6 +15,8 @@ function App() {
   });
 
   const [booking, setBooking] = useState(null);
+  const [showAuth, setShowAuth] = useState(false);
+  const [showMyBookings, setShowMyBookings] = useState(false);
 
   const handleChange = (e) => {
     setForm({
@@ -23,11 +27,28 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setBooking({ ...form });
-
     console.log("Reservation:", form);
   };
+
+  // Show Login and Registration
+  if (showAuth) {
+    return <Auth onBack={() => setShowAuth(false)} />;
+  }
+
+  // Show My Bookings
+  if (showMyBookings) {
+    return (
+      <MyBookings
+        booking={booking}
+        onBack={() => setShowMyBookings(false)}
+        onCancel={() => {
+          setBooking(null);
+          setShowMyBookings(false);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="app">
@@ -42,6 +63,23 @@ function App() {
           <a href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#gallery">Gallery</a>
+
+          <button
+            className="nav-button"
+            type="button"
+            onClick={() => setShowAuth(true)}
+          >
+            Login / Register
+          </button>
+
+          <button
+            className="nav-button"
+            type="button"
+            onClick={() => setShowMyBookings(true)}
+          >
+            My Bookings
+          </button>
+
           <a href="#booking" className="nav-button">
             Book a Table
           </a>
@@ -140,6 +178,7 @@ function App() {
           ) : (
             <>
               <h3>Booking Details</h3>
+
               <p className="subtitle">
                 Fill in the details below to reserve your table.
               </p>
@@ -196,7 +235,7 @@ function App() {
                   value={form.guests}
                   onChange={handleChange}
                 >
-                  {[1,2,3,4,5,6,7,8,9,10].map((n) => (
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
                     <option key={n} value={n}>
                       {n} {n === 1 ? "Guest" : "Guests"}
                     </option>
