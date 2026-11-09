@@ -1,0 +1,144 @@
+
+.my-bookings-page {
+  min-height: 100vh;
+  background: #171613;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-bookings-card {
+  width: 100%;
+  max-width: 850px;
+  padding: 45px;
+  background: #f8f5ee;
+  border-radius: 20px;
+  text-align: center;
+  color: #25221d;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+}
+
+.my-bookings-card h1,
+.reservation-card h2,
+.no-bookings h2 {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.my-bookings-card h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.my-bookings-subtitle {
+  color: #77716a;
+  margin-bottom: 35px;
+}
+
+.reservation-card {
+  padding: 30px;
+  border: 1px solid #e4ddd0;
+  border-radius: 14px;
+  background: #fffdf8;
+  text-align: left;
+}
+
+.reservation-card h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 25px;
+}
+
+.reservation-info p {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee8dc;
+  color: #49443d;
+  overflow-wrap: anywhere;
+}
+
+.reservation-info strong {
+  color: #28231c;
+}
+
+.booking-status {
+  color: #986a2e;
+  font-weight: 700;
+}
+
+.demo-booking-label {
+  display: table;
+  margin: 22px auto 12px;
+  padding: 9px 20px;
+  border-radius: 30px;
+  background: #eee1c7;
+  color: #805a29;
+  font-weight: 600;
+}
+
+.booking-disclaimer {
+  text-align: center;
+  color: #81796f;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.cancel-booking-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 7px;
+  background: #a94132;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel-booking-button:hover {
+  background: #853125;
+}
+
+.no-bookings {
+  padding: 45px 15px;
+  background: #fffdf8;
+  border-radius: 12px;
+}
+
+.no-bookings h2 {
+  font-size: 29px;
+}
+
+.no-bookings p {
+  color: #77716a;
+  margin-top: 12px;
+}
+
+.back-home-button {
+  margin-top: 30px;
+  padding: 15px 28px;
+  border: none;
+  border-radius: 7px;
+  background: #b98b51;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.back-home-button:hover {
+  background: #966b39;
+}
+
+@media (max-width: 600px) {
+  .my-bookings-card {
+    padding: 25px 15px;
+  }
+
+  .my-bookings-card h1 {
+    font-size: 32px;
+  }
+
+  .reservation-card {
+    padding: 20px 14px;
+  }
+}
