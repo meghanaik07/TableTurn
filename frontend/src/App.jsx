@@ -1,22 +1,51 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Auth from "./Auth";
 import MyBookings from "./MyBooking";
 
-function App() {
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    date: "",
-    time: "",
-    guests: "2",
-    requests: "",
-  });
+const emptyForm = {
+  name: "",
+  phone: "",
+  date: "",
+  time: "",
+  guests: "2",
+  requests: "",
+};
 
-  const [booking, setBooking] = useState(null);
+function loadBookings() {
+  try {
+    const saved = localStorage.getItem("tableTurnBookings");
+
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
+    }
+
+    // Migrate an older single booking, if one exists
+    const oldBooking = localStorage.getItem("tableTurnBooking");
+
+    if (oldBooking) {
+      const parsed = JSON.parse(oldBooking);
+      return parsed ? [parsed] : [];
+    }
+
+    return [];
+  } catch {
+    return [];
+  }
+}
+
+function App() {
+  const [form, setForm] = useState({ ...emptyForm });
+  const [bookings, setBookings] = useState(loadBookings);
+  const [confirmationBooking, setConfirmationBooking] = useState(null);
   const [showAuth, setShowAuth] = useState(false);
   const [showMyBookings, setShowMyBookings] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("tableTurnBookings", JSON.stringify(bookings));
+  }, [bookings]);
 
   const handleChange = (e) => {
     setForm({
@@ -27,25 +56,34 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setBooking({ ...form });
-    console.log("Reservation:", form);
+
+    const newBooking = {
+      ...form,
+      bookingId: "TT-" + Date.now().toString().slice(-8),
+      status: "Pending",
+    };
+
+    setBookings((previous) => [...previous, newBooking]);
+    setConfirmationBooking(newBooking);
+    setForm({ ...emptyForm });
   };
 
-  // Show Login and Registration
+  const handleCancel = (bookingId) => {
+    setBookings((previous) =>
+      previous.filter((item) => item.bookingId !== bookingId)
+    );
+  };
+
   if (showAuth) {
     return <Auth onBack={() => setShowAuth(false)} />;
   }
 
-  // Show My Bookings
   if (showMyBookings) {
     return (
       <MyBookings
-        booking={booking}
+        bookings={bookings}
         onBack={() => setShowMyBookings(false)}
-        onCancel={() => {
-          setBooking(null);
-          setShowMyBookings(false);
-        }}
+        onCancel={handleCancel}
       />
     );
   }
@@ -66,7 +104,6 @@ function App() {
 
           <button
             className="nav-button"
-            type="button"
             onClick={() => setShowAuth(true)}
           >
             Login / Register
@@ -74,8 +111,10 @@ function App() {
 
           <button
             className="nav-button"
-            type="button"
-            onClick={() => setShowMyBookings(true)}
+            onClick={() => {
+              setConfirmationBooking(null);
+              setShowMyBookings(true);
+            }}
           >
             My Bookings
           </button>
@@ -149,30 +188,44 @@ function App() {
         </div>
 
         <div className="booking-card">
-          {booking ? (
+          {confirmationBooking ? (
             <div className="confirmation">
               <div className="confirmation-icon">✓</div>
 
-              <h2>Thank You, {booking.name}!</h2>
+              <h2>Thank You, {confirmationBooking.name}!</h2>
 
-              <p>
-                Your reservation details have been received.
-              </p>
+              <p>Your reservation details have been received.</p>
 
               <div className="booking-details">
-                <p><strong>Date:</strong> {booking.date}</p>
-                <p><strong>Time:</strong> {booking.time}</p>
-                <p><strong>Guests:</strong> {booking.guests}</p>
-                <p><strong>Phone:</strong> {booking.phone}</p>
+                <p>
+                  <strong>Booking ID:</strong>{" "}
+                  {confirmationBooking.bookingId}
+                </p>
+                <p>
+                  <strong>Status:</strong> {confirmationBooking.status}
+                </p>
+                <p><strong>Date:</strong> {confirmationBooking.date}</p>
+                <p><strong>Time:</strong> {confirmationBooking.time}</p>
+                <p><strong>Guests:</strong> {confirmationBooking.guests}</p>
+                <p><strong>Phone:</strong> {confirmationBooking.phone}</p>
               </div>
 
               <p className="demo-note">
-                Demo confirmation — your booking is not yet
-                stored in a database.
+                Demo booking — temporarily saved in this browser.
+                Restaurant confirmation is not yet connected.
               </p>
 
-              <button onClick={() => setBooking(null)}>
+              <button onClick={() => setConfirmationBooking(null)}>
                 Make Another Reservation
+              </button>
+
+              <button
+                onClick={() => {
+                  setConfirmationBooking(null);
+                  setShowMyBookings(true);
+                }}
+              >
+                View My Bookings
               </button>
             </div>
           ) : (
@@ -287,7 +340,10 @@ function App() {
 
       {/* Gallery */}
       <section className="gallery-section" id="gallery">
-        <p className="section-label">A GLIMPSE OF OUR EXPERIENCE</p>
+        <p className="section-label">
+          A GLIMPSE OF OUR EXPERIENCE
+        </p>
+
         <h2>Moments Around the Table</h2>
 
         <div className="gallery-grid">
