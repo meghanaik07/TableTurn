@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 
 const waitlistSchema = new mongoose.Schema(
@@ -8,6 +9,11 @@ const waitlistSchema = new mongoose.Schema(
       trim: true
     },
     phone: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    restaurant: {
       type: String,
       required: true,
       trim: true
